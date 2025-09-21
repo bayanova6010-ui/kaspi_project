@@ -1,32 +1,89 @@
-<input type="text" id="phone" placeholder="Введите номер клиента" />
-<input type="text" id="name" placeholder="Имя клиента" />
-<input type="text" id="product" placeholder="Название товара" />
-<input type="text" id="orderCode" placeholder="OrderCode (номер заказа)" />
-<input type="text" id="productCode" placeholder="ProductCode (код товара)" />
-<button onclick="openWhatsApp()">Открыть WhatsApp</button>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Авто WhatsApp</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 
-<script>
-function openWhatsApp() {
-    let phone = document.getElementById("phone").value;
-    let name = document.getElementById("name").value;
-    let product = document.getElementById("product").value;
-    let orderCode = document.getElementById("orderCode").value;
-    let productCode = document.getElementById("productCode").value;
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* вертикальная центровка */
+      align-items: center;     /* горизонтальная центровка */
+      height: 100vh;            /* контейнер на всю высоту экрана */
+      box-sizing: border-box;
+      padding: 20px;            /* немного отступов, чтобы на маленьких экранах не упиралось */
+    }
 
-    if(!/^\d{11}$/.test(phone)) {
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    /* Можно ещё: */
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Отправить авто-сообщение</h2>
+
+    <input type="text" id="phone" placeholder="Введите номер клиента" />
+    <input type="text" id="name" placeholder="Имя клиента" />
+    <input type="text" id="product" placeholder="Название товара" />
+    <input type="text" id="orderCode" placeholder="Код заказа (orderCode)" />
+    <input type="text" id="productCode" placeholder="Код товара (productCode)" />
+
+    <button onclick="openWhatsApp()">Открыть WhatsApp</button>
+  </div>
+
+  <script>
+    function openWhatsApp() {
+      let phone = document.getElementById("phone").value;
+      let name = document.getElementById("name").value;
+      let product = document.getElementById("product").value;
+      let orderCode = document.getElementById("orderCode").value;
+      let productCode = document.getElementById("productCode").value;
+
+      if(!/^\d{11}$/.test(phone)) {
         alert("Введите корректный номер в формате 77071112233");
         return;
-    }
-    if(!name || !product || !orderCode || !productCode) {
-        alert("Введите все данные: имя, товар, orderCode, productCode");
+      }
+      if(!name || !product || !orderCode || !productCode) {
+        alert("Заполните все поля");
         return;
+      }
+
+      let reviewLink = `https://kaspi.kz/shop/review/productreview?orderCode=${orderCode}&productCode=${productCode}&rating=5`;
+
+      let text = `Сәлеметсіз бе, ${name}!\n\nBio-Farm дүкенінде:\n${product}\n\nсатып алуыңызбен құттықтаймыз. Сізге бәрі ұнады деп үміттенеміз.\nБіз үшін әрбір тұтынушымыздың пікірі өте маңызды, сондықтан осында біздің дүкеннің атын көрсете отырып, пікір қалдыруыңызды сұраймыз:\n${reviewLink}\n\nАлдын-ала рахмет!\nІзгі ниетпен, Bio-Farm!\n\n====================\n\nЗдравствуйте, ${name}!\n\nПоздравляем с покупкой!\nМы очень рады, что вы приобрели:\n${product}\n\nименно в магазине Bio-Farm и надеемся, что вам все понравилось!\nПожалуйста, оставьте отзыв, для нас это крайне важно:\n${reviewLink}\n\nЗаранее вам признательны!\nС уважением, компания Bio-Farm!`;
+
+      let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+      window.open(url, "_blank");
     }
-
-    let link = `https://kaspi.kz/shop/review/productreview?orderCode=${orderCode}&productCode=${productCode}&rating=5`;
-
-    let text = `Сәлеметсіз бе, ${name}!\n\nBio-Farm дүкенінде:\n${product}\n\nсатып алуыңызбен құттықтаймыз. Сізге бәрі ұнады деп үміттенеміз.\nБіз үшін әрбір тұтынушымыздың пікірі өте маңызды, сондықтан осында біздің дүкеннің атын көрсете отырып, пікір қалдыруыңызды сұраймыз:\n${link}\n\nАлдын-ала рахмет!\nІзгі ниетпен, Bio-Farm!\n\n====================\n\nЗдравствуйте, ${name}!\n\nПоздравляем с покупкой!\nМы очень рады, что вы приобрели:\n${product}\n\nименно в магазине Bio-Farm и надеемся, что вам все понравилось!\nПожалуйста, оставьте отзыв, для нас это крайне важно:\n${link}\n\nЗаранее вам признательны!\nС уважением, компания Bio-Farm!`;
-
-    let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-    window.open(url, "_blank");
-}
-</script>
+  </script>
+</body>
+</html>
