@@ -1,0 +1,11 @@
+[
+  {
+    "order_code": "TEST123",
+    "store": "Bio-Farm",
+    "product_name": "Тестовый товар",
+    "article": "17501020",
+    "name": "Айгуль",
+    "phone": "87771234567",
+    "status": "отправлен"
+  }
+]
